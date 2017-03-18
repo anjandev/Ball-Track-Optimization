@@ -4,9 +4,10 @@
 % getOldVelocity(1) = x velocity only
 % getOldVelocity(2) = y velocity only
 % getOldVelocity(3) = magnitude 
-
 % setTheta(theta) %%setting the angle
 % getTheta() %%gets the theta value
+
+% TODO: CHECK ALL UNITS
 
 clc
 clear all
@@ -34,7 +35,7 @@ oldPosition = position + oldPosition;
 plot(oldPosition(1),oldPosition(2),'o');
 
 %setting graph size
-xyMax = 36;
+xyMax = 0.914; % converted inches to m
 axis([0,xyMax,-xyMax,0]);
 pause(DELTA_TIME);
 
@@ -45,10 +46,14 @@ setOldVelocity(finalVelocity(1),finalVelocity(2));
 velocity = getOldVelocity(0);
 %exiting the while loop and displying final vectors
 if abs(oldPosition(1))>xyMax |oldPosition(1)<-1 ||oldPosition(2)> 1 | abs(oldPosition(2))>xyMax
-    final_Position = oldPosition
-    final_Velocity = velocity
-    timer = n*DELTA_TIME
+    final_Position = oldPosition;
+    final_Velocity = velocity;
+    timer = n*DELTA_TIME;
     on = 0;
 end
 end
+TimeResult = sprintf('Time To Completion: %d s', timer)
+disp('Final Velocity')
+disp('   V_x      V_y')
+disp(final_Velocity)
 
