@@ -34,23 +34,18 @@ n = 1; %timer counter
 while on == 1;
     [position, finalVelocity] = slopeNoSlipping;
     oldPosition = position + oldPosition;
-    
-    %%  Graphical Simulation
-    % Stopped graphical simulation because for precise calculation,
-    % the graph is waiting for the computer to compute the values
-    % and it doesnt the actual movement of the ball. 
-    % Graphical simulation only shows a decent representation of motion 
-    % when the calculation is not precise.
-    
-    %plot(oldPosition(1),oldPosition(2),'o');
+    plot(oldPosition(1),oldPosition(2),'o');
 
     %setting graph size
-    %xyMax = 0.914; % converted inches to m
-    %axis([0,xyMax,-xyMax,0]);
+    xyMax = 0.914; % converted inches to m
+    axis([0,xyMax,-xyMax,0]);
     
-    %pause(DELTA_TIME);
+    %Stopped simulation because it takes too long.
+    %We can record a gif later but for precise computation
+    %simulation takes too long
+    
+    % pause(DELTA_TIME);
 
-    %% Calculation of Velocities and Positions
     %timer counter
     n = n+1;
     %keeping track of position and velocity
