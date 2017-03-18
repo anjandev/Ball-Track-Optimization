@@ -38,7 +38,7 @@ while on == 1;
     %%  Graphical Simulation
     % Stopped graphical simulation because for precise calculation,
     % the graph is waiting for the computer to compute the values
-    % and it doesnt the actual movement of the ball. 
+    % and it doesnt show the actual movement of the ball. 
     % Graphical simulation only shows a decent representation of motion 
     % when the calculation is not precise.
     
