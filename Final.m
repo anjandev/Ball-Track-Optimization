@@ -26,6 +26,8 @@ DELTA_TIME = 0.0001;
 setOldVelocity(0.01,0.01);
 %ramp angle
 setTheta(pi/4);
+%graph size, 36inch to meter
+xyMax = 0.914; % converted inches to m
 
 
 oldPosition = [0,0];
@@ -45,7 +47,6 @@ while on == 1;
     %plot(oldPosition(1),oldPosition(2),'o');
 
     %setting graph size
-    %xyMax = 0.914; % converted inches to m
     %axis([0,xyMax,-xyMax,0]);
     
     %pause(DELTA_TIME);
