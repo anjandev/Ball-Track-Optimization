@@ -37,6 +37,7 @@ while on == 1;
     [position, finalVelocity] = slopeNoSlipping;
     oldPosition = position + oldPosition;
     
+    
     %%  Graphical Simulation
     % Stopped graphical simulation because for precise calculation,
     % the graph is waiting for the computer to compute the values
@@ -44,14 +45,14 @@ while on == 1;
     % Graphical simulation only shows a decent representation of motion 
     % when the calculation is not precise.
     
-    
     %Position Simulation
     subplot(3,1,1)
     plot(oldPosition(1),oldPosition(2),'o');
+    hold on;
     axis([0,xyMax,-xyMax,0]);
-    title('position')
-    xlabel('x position')
-    ylabel('y position')
+    title(['Position, data point every ',num2str(DELTA_TIME),'s'])
+    xlabel('X-position')
+    ylabel('Y-position')
     
     %Velocity Simulation
     subplot(3,1,2)
