@@ -33,10 +33,10 @@ xyMax = 0.9144; % converted inches to m
 oldPosition = [0,0];
 on = 1; %gets out of the while loop
 n = 1; %timer counter
+timer = 0;
 while on == 1;
     [position, finalVelocity] = slopeNoSlipping;
     oldPosition = position + oldPosition;
-    
     
     %%  Graphical Simulation
     % Stopped graphical simulation because for precise calculation,
@@ -45,21 +45,23 @@ while on == 1;
     % Graphical simulation only shows a decent representation of motion 
     % when the calculation is not precise.
     
+    
     %Position Simulation
     subplot(3,1,1)
     plot(oldPosition(1),oldPosition(2),'o');
-    hold on;
     axis([0,xyMax,-xyMax,0]);
-    title(['Position, data point every ',num2str(DELTA_TIME),'s'])
-    xlabel('X-position')
-    ylabel('Y-position')
+    T_disp = timer; 
+    title('Velocity vs Time')
+    xlabel(['Time (s)       ''Current Time: ' num2str(T_disp) 's'])
+    ylabel('y position')
     
     %Velocity Simulation
     subplot(3,1,2)
     plot(n*DELTA_TIME,norm(finalVelocity),'o')
     hold on;
+    V_disp = norm(finalVelocity);
     title('Velocity vs Time')
-    xlabel('Time (s)')
+    xlabel(['Time (s)       ''Current Velocity: ' num2str(V_disp) 'm/s'])
     ylabel('Velocity (m/s)')
     
     %Acceleration Simulation
@@ -75,6 +77,7 @@ while on == 1;
     %% Calculation of Velocities and Positions
     %timer counter
     n = n+1;
+    timer = (n+1)*DELTA_TIME;
     %keeping track of position and velocity
     setOldVelocity(finalVelocity(1),finalVelocity(2));
     velocity = getOldVelocity(0);
