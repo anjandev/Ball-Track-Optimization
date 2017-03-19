@@ -20,14 +20,14 @@ MASS = 1;
 INERTIA = (2/5)*MASS*BALLRADIUS^2; 
 
 % Decrase for precision
-DELTA_TIME = 0.0001;
+DELTA_TIME = 0.01;
 
 %initial velocity. Decrease for precision
 setOldVelocity(0.01,0.01);
 %ramp angle
 setTheta(pi/4);
 %graph size, 36inch to meter
-xyMax = 0.914; % converted inches to m
+xyMax = 0.9144; % converted inches to m
 
 
 oldPosition = [0,0];
@@ -44,12 +44,32 @@ while on == 1;
     % Graphical simulation only shows a decent representation of motion 
     % when the calculation is not precise.
     
-    %plot(oldPosition(1),oldPosition(2),'o');
-
-    %setting graph size
-    %axis([0,xyMax,-xyMax,0]);
     
-    %pause(DELTA_TIME);
+    %Position Simulation
+    subplot(3,1,1)
+    plot(oldPosition(1),oldPosition(2),'o');
+    axis([0,xyMax,-xyMax,0]);
+    title('position')
+    xlabel('x position')
+    ylabel('y position')
+    
+    %Velocity Simulation
+    subplot(3,1,2)
+    plot(n*DELTA_TIME,norm(finalVelocity),'o')
+    hold on;
+    title('Velocity vs Time')
+    xlabel('Time (s)')
+    ylabel('Velocity (m/s)')
+    
+    %Acceleration Simulation
+    subplot(3,1,3)
+    hold on;
+    plot(n*DELTA_TIME,(norm(finalVelocity)-getOldVelocity(3))/DELTA_TIME,'o')
+    title('Acceleration vs Time')
+    xlabel('Time (s)')
+    ylabel('Acceleration (m/s^2)')
+    
+    pause(DELTA_TIME);
 
     %% Calculation of Velocities and Positions
     %timer counter
