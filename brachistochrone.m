@@ -1,3 +1,16 @@
+clear all
+close all
+clc
+
+global GRAVITY BALLRADIUS INERTIA DELTA_TIME MASS
+GRAVITY = -9.81;
+BALLRADIUS = 1;
+MASS = 1;
+INERTIA = (2/5)*MASS*BALLRADIUS^2; 
+
+% Decrase for precision
+DELTA_TIME = 0.01;
+
 CURVE_SIZE = 14; % Scales brachistochrone curve
 DIVISIONS = 10000;
 t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
@@ -38,9 +51,9 @@ for idx = 1:length(slopes_theta)
     if idx == 1
         velocities(idx) = norm(finalVelocity);
     else
-        velocities[idx] = norm(finalVelocity);
+        velocities(idx) = norm(finalVelocity);
         delta_time = norm([x(idx) - x(idx -1), y(idx) - y(idx -1)]) / norm(finalVelocity);
-        accelerations[idx] = getOldVelocity(3) / (delta_time);
+        accelerations(idx) = getOldVelocity(3) / (delta_time);
         elapsedTime = delta_time + elapsedTime;
         
     end
