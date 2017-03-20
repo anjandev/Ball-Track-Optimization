@@ -61,14 +61,3 @@ for idx = 1:length(slopes_theta)
     setOldVelocity(finalVelocity(1),finalVelocity(2));
     
 end
-
-%%test
-
-%test 2
-%%%
-%%
-
-
-
-
-%
