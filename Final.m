@@ -96,3 +96,19 @@ disp('Final Velocity')
 disp('   V_x      V_y')
 disp(final_Velocity)
 
+
+
+%t = linspace(0,pi, 10000); %%define t for parametric equations (1000 divisions)
+
+%c = (20.625)*(t-sin(t)); %% x equation
+%d = (20.625)*(-1+cos(t)); %% y equation
+
+%a =linspace(0,36, 10000);  %% define x-axis for y = -x equation
+%b = -a; %% y=-x equation
+
+%% plotting commands
+%plot(a,b)
+%hold on 
+%plot(c,d)
+
+%% NOTE: 20.625 is a variable. increasing it makes the curve bigger. hand calculation is currently with me
