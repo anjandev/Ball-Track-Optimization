@@ -31,10 +31,10 @@ xyMax = 0.9144; % converted inches to m
 
 
 oldPosition = [0,0];
-on = 1; %gets out of the while loop
+
 n = 1; %timer counter
 timer = 0;
-while on == 1;
+while 1;
     [position, finalVelocity] = slopeNoSlipping;
     oldPosition = position + oldPosition;
     
@@ -68,18 +68,15 @@ while on == 1;
     %Acceleration Simulation
     subplot(3,1,3)
     hold on;
-    A_Disp = (norm(finalVelocity)-getOldVelocity(3))/DELTA_TIME
-    plot(n*DELTA_TIME,A_Disp,'o')
-    title('Acceleration vs Time')
-    xlabel(['Time (s)       ' 'Current Acceleration: ' num2str(A_Disp) 'm/s^2'])
-    ylabel('Acceleration (m/s^2)')
+    A_Disp = (norm(finalVelocity)-getOldVelocity(3))/DELTA_TIME;
+    plot(n*DELTA_TIME,A_Disp,'o');
+    title('Acceleration vs Time');
+    xlabel(['Time (s)       ' 'Current Acceleration: ' num2str(A_Disp) 'm/s^2']);
+    ylabel('Acceleration (m/s^2)');
     
     pause(DELTA_TIME);
 
     %% Calculation of Velocities and Positions
-    %timer counter
-    n = n+1;
-    timer = (n+1)*DELTA_TIME;
     %keeping track of position and velocity
     setOldVelocity(finalVelocity(1),finalVelocity(2));
     velocity = getOldVelocity(0);
@@ -87,28 +84,14 @@ while on == 1;
     if abs(oldPosition(1))>xyMax |oldPosition(1)<-1 ||oldPosition(2)> 1 | abs(oldPosition(2))>xyMax
         final_Position = oldPosition;
         final_Velocity = velocity;
-        timer = n*DELTA_TIME;
-        on = 0;
+        break;
     end
+    %timer counter
+    n = n+1;
+    timer = (n)*DELTA_TIME;
 end
+
 TimeResult = sprintf('Time To Completion: %d s', timer)
 disp('Final Velocity')
 disp('   V_x      V_y')
 disp(final_Velocity)
-
-
-
-%t = linspace(0,pi, 10000); %%define t for parametric equations (1000 divisions)
-
-%c = (20.625)*(t-sin(t)); %% x equation
-%d = (20.625)*(-1+cos(t)); %% y equation
-
-%a =linspace(0,36, 10000);  %% define x-axis for y = -x equation
-%b = -a; %% y=-x equation
-
-%% plotting commands
-%plot(a,b)
-%hold on 
-%plot(c,d)
-
-%% NOTE: 20.625 is a variable. increasing it makes the curve bigger. hand calculation is currently with me
