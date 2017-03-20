@@ -77,9 +77,6 @@ while 1;
     pause(DELTA_TIME);
 
     %% Calculation of Velocities and Positions
-    %timer counter
-    n = n+1;
-    timer = (n)*DELTA_TIME;
     %keeping track of position and velocity
     setOldVelocity(finalVelocity(1),finalVelocity(2));
     velocity = getOldVelocity(0);
@@ -87,9 +84,11 @@ while 1;
     if abs(oldPosition(1))>xyMax |oldPosition(1)<-1 ||oldPosition(2)> 1 | abs(oldPosition(2))>xyMax
         final_Position = oldPosition;
         final_Velocity = velocity;
-        timer = n*DELTA_TIME;
         break;
     end
+    %timer counter
+    n = n+1;
+    timer = (n)*DELTA_TIME;
 end
 
 TimeResult = sprintf('Time To Completion: %d s', timer)
