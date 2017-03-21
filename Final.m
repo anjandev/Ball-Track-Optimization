@@ -23,7 +23,7 @@ INERTIA = (2/5)*MASS*BALLRADIUS^2;
 DELTA_TIME = 0.01;
 
 %initial velocity. Decrease for precision
-setOldVelocity(0.01,0.01);
+setOldVelocity(0.01,-0.01);
 %ramp angle
 setTheta(pi/4);
 %graph size, 36inch to meter
