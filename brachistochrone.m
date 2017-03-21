@@ -10,8 +10,8 @@ INERTIA = (2/5)*MASS*BALLRADIUS^2;
 DELTA_TIME = 0.01; % Inserted so slopeNoSLipping doesnt complain. IS NOT USED
                    % FOR ANY CALCULATIONS AT ANY POINT
 
-CURVE_SIZE = 14; % Scales brachistochrone curve
-DIVISIONS = 100000;
+CURVE_SIZE = 140; % Scales brachistochrone curve
+DIVISIONS = 1000;
 t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
 
 x = (CURVE_SIZE)*(t-sin(t)); %% x equation
@@ -61,6 +61,7 @@ for idx = 1:length(slopes_theta)
     end
 
     setOldVelocity(finalVelocity(1),finalVelocity(2));
+   
     
 end
 
