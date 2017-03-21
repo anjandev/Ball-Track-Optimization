@@ -28,25 +28,22 @@ timer = 0;
 %initial velocity. Decrease for precision
 setOldVelocity(0.01,-0.01);
 %ramp angle
-setTheta(pi/4);
+setTheta(pi/2);
 %graph size, 36inch to meter
 xyMax = 0.9144; % converted inches to m
 
 
 oldPosition = [0,0];
 
-
+n = 0;
+timer = 0;
+velocity = 0;
 while 1;
-    [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME);
-    oldPosition = position + oldPosition;
-    
-    %%  Graphical Simulation
-    % Stopped graphical simulation because for precise calculation,
-    % the graph is waiting for the computer to compute the values
-    % and it doesnt show the actual movement of the ball. 
-    % Graphical simulation only shows a decent representation of motion 
-    % when the calculation is not precise.
-    
+     while oldPosition(2) < -0.31348 
+        [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME);
+        oldPosition = position + oldPosition;
+        %%%%
+         
     
     %Position Simulation
     subplot(3,1,1)
@@ -78,19 +75,20 @@ while 1;
     
     pause(DELTA_TIME);
 
-    %% Calculation of Velocities and Positions
-    %keeping track of position and velocity
-    setOldVelocity(finalVelocity(1),finalVelocity(2));
-    velocity = getOldVelocity(0);
-    %exiting the while loop and displying final vectors
-    if abs(oldPosition(1))>xyMax |oldPosition(1)<-1 ||oldPosition(2)> 1 | abs(oldPosition(2))>xyMax
+        
+        
+        
+        %graphing()
+        %%%
+        setOldVelocity(finalVelocity(1),finalVelocity(2));
+        velocity = getOldVelocity(0);
+            %timer counter
+        n = n+1;
+        timer = (n)*DELTA_TIME;
+     end
         final_Position = oldPosition;
         final_Velocity = velocity;
-        break;
-    end
-    %timer counter
-    n = n+1;
-    timer = (n)*DELTA_TIME;
+     %while oldPosition(1) < 0.695 && oldPosition1(2) < - 0.4788
 end
 
 TimeResult = sprintf('Time To Completion: %d s', timer)
