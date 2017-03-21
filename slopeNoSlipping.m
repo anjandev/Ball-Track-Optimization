@@ -14,6 +14,7 @@ function [position, finalVelocity] = slopeNoSlipping()
     %finalVelocity = finalVelocity*[cos(getTheta),-sin(getTheta)];
 
 
-    position = getOldVelocity(0)*DELTA_TIME;
+
+    position = (getOldVelocity(0)+finalVelocity)/2*DELTA_TIME;
 
 end
