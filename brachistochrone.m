@@ -41,8 +41,7 @@ accelerations = 1:length(slopes_theta);
 
 for idx = 1:length(slopes_theta)
     setTheta(slopes_theta(idx));
-    deltaY = (y(idx+1) - y(idx));
-    [delta_position, finalVelocity] = slopeNoSlipping(deltaY);
+    [delta_position, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)));
     
     % In the original slope algorithm, we used 
     % delta_position = delta_time * velocity from slopeNoSlipping function
