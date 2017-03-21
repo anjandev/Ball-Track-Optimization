@@ -13,11 +13,12 @@ clc
 clear all
 close all
 
-global GRAVITY BALLRADIUS INERTIA DELTA_TIME MASS
+global GRAVITY BALLRADIUS INERTIA DELTA_TIME MASS K_FRICTION 
 GRAVITY = -9.81;
 BALLRADIUS = 1;
 MASS = 1;
 INERTIA = (2/5)*MASS*BALLRADIUS^2; 
+K_FRICTION = 0.25;
 
 % Decrase for precision
 DELTA_TIME = 0.01;
@@ -30,6 +31,8 @@ setTheta(pi/4);
 xyMax = 0.9144; % converted inches to m
 
 
+slopeSlipping();
+%{
 oldPosition = [0,0];
 on = 1; %gets out of the while loop
 n = 1; %timer counter
@@ -96,7 +99,7 @@ disp('Final Velocity')
 disp('   V_x      V_y')
 disp(final_Velocity)
 
-
+ %}
 
 %t = linspace(0,pi, 10000); %%define t for parametric equations (1000 divisions)
 
