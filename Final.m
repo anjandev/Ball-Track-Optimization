@@ -6,7 +6,7 @@ global GRAVITY BALLRADIUS INERTIA DELTA_TIME MASS xyMax
 GRAVITY = -9.81;
 BALLRADIUS = 1;
 MASS = 1;
-INERTIA = (2/5)*MASS*BALLRADIUS^2; 
+INERTIA = (2/5)*MASS*BALLRADIUS^2;
 
 DELTA_TIME = 0.01;
 
@@ -31,7 +31,7 @@ t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisi
 x = (CURVE_SIZE)*(t-sin(t)); %% x equation
 y = -(CURVE_SIZE)*(-1+cos(t)); %% y equation
 
-%% Find Slopes 
+%% Find Slopes
 % I can do this two ways, I can either use equation or just do
 % delta y/delta x
 slopes_theta = 1:(length(y)-1);
@@ -47,14 +47,14 @@ accelerations = 1:length(slopes_theta);
 
 %%
 
-    while oldPosition(2) > -0.31348 
-        [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME);
-        oldPosition = position + oldPosition;
-            %%  Graphical Simulation
+while oldPosition(2) > -0.31348
+    [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME);
+    oldPosition = position + oldPosition;
+    %%  Graphical Simulation
     % Stopped graphical simulation because for precise calculation,
     % the graph is waiting for the computer to compute the values
-    % and it doesnt show the actual movement of the ball. 
-    % Graphical simulation only shows a decent representation of motion 
+    % and it doesnt show the actual movement of the ball.
+    % Graphical simulation only shows a decent representation of motion
     % when the calculation is not precise.
     
     %Position Simulation
@@ -62,7 +62,7 @@ accelerations = 1:length(slopes_theta);
     hold on;
     plot(oldPosition(1),oldPosition(2),'o');
     axis([0,xyMax,-xyMax,0]);
-    T_disp = timer; 
+    T_disp = timer;
     title(['Position vs Time,    ',num2str(DELTA_TIME),'s per increment'])
     xlabel(['Time (s)       ' 'Current Time: ' num2str(T_disp) 's'])
     ylabel('y position')
@@ -86,19 +86,19 @@ accelerations = 1:length(slopes_theta);
     ylabel('Acceleration (m/s^2)');
     
     pause(DELTA_TIME);
-                
+    
     %% Calculation of Velocities and Positions
     %keeping track of position and velocity
     setOldVelocity(finalVelocity(1),finalVelocity(2));
     velocity = getOldVelocity(0);
-
+    
     n = n+1;
     timer = (n)*DELTA_TIME;
-    end
+end
 final_Velocity = velocity
 
 %while oldPosition(1) < 0.695 && oldPosition(2) > - 0.785
-    
+
 for idx = 1:length(slopes_theta)
     setTheta(slopes_theta(idx));
     [delta_position, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)));
@@ -113,28 +113,24 @@ for idx = 1:length(slopes_theta)
         
         setOldVelocity(finalVelocity(1),finalVelocity(2));
         oldPosition = delta_position + oldPosition
-    
-   
-    subplot(3,1,1)
-    hold on;
-    plot(oldPosition(1),oldPosition(2),'o');
-    %axis([0,xyMax,-xyMax,0]);
-    T_disp = timer; 
-    title(['Position vs Time,    ',num2str(DELTA_TIME),'s per increment'])
-    xlabel(['Time (s)       ' 'Current Time: ' num2str(T_disp) 's'])
-    ylabel('y position')
-    pause(DELTA_TIME);
         
-    if oldPosition(1) > 0.5 && oldPosition(2) < - 0.785
-        break;
-    end 
- %   end
+        
+        subplot(3,1,1)
+        hold on;
+        plot(oldPosition(1),oldPosition(2),'o');
+        %axis([0,xyMax,-xyMax,0]);
+        T_disp = timer;
+        title(['Position vs Time,    ',num2str(DELTA_TIME),'s per increment'])
+        xlabel(['Time (s)       ' 'Current Time: ' num2str(T_disp) 's'])
+        ylabel('y position')
+        pause(DELTA_TIME);
+        
+        if oldPosition(1) > 0.5 && oldPosition(2) < - 0.785
+            break;
+        end        
+    end
+end
 
-    
-end
-   
-end
-    
 TimeResult = sprintf('Time To Completion: %d s', timer)
 disp('Final Velocity')
 disp('   V_x      V_y')
