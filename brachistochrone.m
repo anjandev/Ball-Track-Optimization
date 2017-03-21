@@ -2,33 +2,36 @@ clear all
 close all
 clc
 
-global GRAVITY BALLRADIUS INERTIA DELTA_TIME MASS
+global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME
 GRAVITY = -9.81;
 BALLRADIUS = 1;
 MASS = 1;
 INERTIA = (2/5)*MASS*BALLRADIUS^2; 
-
-% Decrase for precision
-DELTA_TIME = 0.01;
+DELTA_TIME = 0.01; % Inserted so slopeNoSLipping doesnt complain. IS NOT USED
+                   % FOR ANY CALCULATIONS AT ANY POINT
 
 CURVE_SIZE = 14; % Scales brachistochrone curve
-DIVISIONS = 10000;
+DIVISIONS = 100000;
 t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
 
 x = (CURVE_SIZE)*(t-sin(t)); %% x equation
 y = (CURVE_SIZE)*(-1+cos(t)); %% y equation
 
 % Plot the Brachistochrone curve
-plot(x,y)
+%plot(x,y)
 
 %% Find Slopes 
 % I can do this two ways, I can either use equation or just do
 % delta y/delta x
+slopes_theta = 1:(length(y)-1);
 
-slopes_theta = atan2(y, x);
+for idx = 1:length(y)-1
+    slopes_theta(idx) = atan2(y(idx+1)-y(idx), x(idx+1)-x(idx));
+end
+
 %% Set slopes and calculate velocity
 
-setOldVelocity(0.01,0.01);
+setOldVelocity(0.01,-0.01);
 oldPosition = [0,0];
 
 
@@ -38,8 +41,8 @@ accelerations = 1:length(slopes_theta);
 
 for idx = 1:length(slopes_theta)
     setTheta(slopes_theta(idx));
-    
-    [delta_position, finalVelocity] = slopeNoSlipping;
+    deltaY = (y(idx+1) - y(idx));
+    [delta_position, finalVelocity] = slopeNoSlipping(deltaY);
     
     % In the original slope algorithm, we used 
     % delta_position = delta_time * velocity from slopeNoSlipping function
@@ -61,3 +64,5 @@ for idx = 1:length(slopes_theta)
     setOldVelocity(finalVelocity(1),finalVelocity(2));
     
 end
+
+display(norm(finalVelocity))

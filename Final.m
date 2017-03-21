@@ -35,7 +35,7 @@ oldPosition = [0,0];
 n = 1; %timer counter
 timer = 0;
 while 1;
-    [position, finalVelocity] = slopeNoSlipping;
+    [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME);
     oldPosition = position + oldPosition;
     
     %%  Graphical Simulation
@@ -52,7 +52,7 @@ while 1;
     plot(oldPosition(1),oldPosition(2),'o');
     axis([0,xyMax,-xyMax,0]);
     T_disp = timer; 
-    title(['Velocity vs Time,    ',num2str(DELTA_TIME),'s per increment'])
+    title(['Position vs Time,    ',num2str(DELTA_TIME),'s per increment'])
     xlabel(['Time (s)       ' 'Current Time: ' num2str(T_disp) 's'])
     ylabel('y position')
     
