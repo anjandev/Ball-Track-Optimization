@@ -22,6 +22,9 @@ INERTIA = (2/5)*MASS*BALLRADIUS^2;
 % Decrase for precision
 DELTA_TIME = 0.01;
 
+n = 1; %timer counter
+timer = 0;
+
 %initial velocity. Decrease for precision
 setOldVelocity(0.01,-0.01);
 %ramp angle
@@ -32,8 +35,7 @@ xyMax = 0.9144; % converted inches to m
 
 oldPosition = [0,0];
 
-n = 1; %timer counter
-timer = 0;
+
 while 1;
     [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME);
     oldPosition = position + oldPosition;
