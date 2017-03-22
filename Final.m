@@ -23,7 +23,7 @@ timer = 0;
 %% Brachisochrone
 
 CURVE_SIZE = 1.40; % Scales brachistochrone curve
-DIVISIONS = 10000;
+DIVISIONS = 1000;
 t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
 
 x = (CURVE_SIZE)*(t-sin(t)); %% x equation
@@ -147,5 +147,5 @@ end
 TimeResult = sprintf('Time To Completion: %d s', timer)
 disp('Final Velocity')
 disp('   V_x      V_y')
-disp(final_Velocity)
+disp(getOldVelocity(3))
 
