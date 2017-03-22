@@ -13,11 +13,9 @@ DELTA_TIME = 0.01;
 
 setOldVelocity(0.01,-0.01);
 setTheta(pi/2);
-xyMax =  4  %0.9144; % converted inches to m
+xyMax = 0.9144; % converted inches to m
 
 oldPosition = [0,0];
-
-
 
 
 n = 1; %timer counter
@@ -25,11 +23,11 @@ timer = 0;
 %% Brachisochrone
 
 CURVE_SIZE = 1.40; % Scales brachistochrone curve
-DIVISIONS = 1000;
+DIVISIONS = 10000;
 t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
 
 x = (CURVE_SIZE)*(t-sin(t)); %% x equation
-y = -(CURVE_SIZE)*(-1+cos(t)); %% y equation
+y = (CURVE_SIZE)*(-1+cos(t)); %% y equation
 
 %% Find Slopes
 % I can do this two ways, I can either use equation or just do
@@ -46,9 +44,9 @@ velocities = 1:length(slopes_theta);
 accelerations = 1:length(slopes_theta);
 
 %%
-
+%{
 while oldPosition(2) > -0.31348
-    [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME);
+    [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
     oldPosition = position + oldPosition;
     %%  Graphical Simulation
     % Stopped graphical simulation because for precise calculation,
@@ -90,18 +88,15 @@ while oldPosition(2) > -0.31348
     %% Calculation of Velocities and Positions
     %keeping track of position and velocity
     setOldVelocity(finalVelocity(1),finalVelocity(2));
-    velocity = getOldVelocity(0);
     
     n = n+1;
     timer = (n)*DELTA_TIME;
 end
-final_Velocity = velocity
-
-%while oldPosition(1) < 0.695 && oldPosition(2) > - 0.785
+%}
 
 for idx = 1:length(slopes_theta)
     setTheta(slopes_theta(idx));
-    [delta_position, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)));
+    [delta_position, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)),2);
     
     if idx == 1
         velocities(idx) = norm(finalVelocity);
@@ -111,26 +106,44 @@ for idx = 1:length(slopes_theta)
         accelerations(idx) = getOldVelocity(3) / (delta_time);
         elapsedTime = delta_time + elapsedTime + timer; % added timer
         
-        setOldVelocity(finalVelocity(1),finalVelocity(2));
-        oldPosition = delta_position + oldPosition
-        
-        
-        subplot(3,1,1)
-        hold on;
-        plot(oldPosition(1),oldPosition(2),'o');
-        %axis([0,xyMax,-xyMax,0]);
-        T_disp = timer;
-        title(['Position vs Time,    ',num2str(DELTA_TIME),'s per increment'])
-        xlabel(['Time (s)       ' 'Current Time: ' num2str(T_disp) 's'])
-        ylabel('y position')
-        pause(DELTA_TIME);
-        
-        if oldPosition(1) > 0.5 && oldPosition(2) < - 0.785
-            break;
-        end        
     end
+    %Position Simulation
+    subplot(3,1,1)
+    hold on;
+    plot(oldPosition(1),oldPosition(2),'o');
+    axis([0,xyMax,-xyMax,0]);
+    T_disp = elapsedTime;
+    title(['Position vs Time,    ',num2str(DELTA_TIME),'s per increment'])
+    xlabel(['Time (s)       ' 'Current Time: ' num2str(T_disp) 's'])
+    ylabel('y position')
+    
+    %Velocity Simulation
+    subplot(3,1,2)
+    hold on;
+    V_disp = velocities(idx);
+    plot(elapsedTime,V_disp,'o')
+    title('Velocity vs Time')
+    xlabel(['Time (s)       ' 'Current Velocity: ' num2str(V_disp) 'm/s'])
+    ylabel('Velocity (m/s)')
+  
+    %Acceleration Simulation
+    subplot(3,1,3)
+    hold on;
+    A_Disp = accelerations(idx);
+    plot(elapsedTime,A_Disp,'o');
+    title('Acceleration vs Time');
+    xlabel(['Time (s)       ' 'Current Acceleration: ' num2str(A_Disp) 'm/s^2']);
+    ylabel('Acceleration (m/s^2)');
+    
+    pause(DELTA_TIME);
+    
+    if oldPosition(1) > 0.5 && oldPosition(2) < - 0.785
+        break;
+    end
+    setOldVelocity(finalVelocity(1),finalVelocity(2));
+    oldPosition = delta_position + oldPosition;
+    
 end
-
 TimeResult = sprintf('Time To Completion: %d s', timer)
 disp('Final Velocity')
 disp('   V_x      V_y')
