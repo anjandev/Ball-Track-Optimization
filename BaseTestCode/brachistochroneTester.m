@@ -2,6 +2,9 @@ clear all
 close all
 clc
 
+addpath ../curves
+addpath ../objects
+
 global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME
 GRAVITY = -9.81;
 BALLRADIUS = 1;
@@ -10,7 +13,7 @@ INERTIA = (2/5)*MASS*BALLRADIUS^2;
 DELTA_TIME = 0.01; % Inserted so slopeNoSLipping doesnt complain. IS NOT USED
                    % FOR ANY CALCULATIONS AT ANY POINT
 
-CURVE_SIZE = 140; % Scales brachistochrone curve
+CURVE_SIZE = 14; % Scales brachistochrone curve
 DIVISIONS = 1000;
 t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
 
@@ -41,7 +44,7 @@ accelerations = 1:length(slopes_theta);
 
 for idx = 1:length(slopes_theta)
     setTheta(slopes_theta(idx));
-    [delta_position, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)));
+    [delta_position, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)), 1);
     
     % In the original slope algorithm, we used 
     % delta_position = delta_time * velocity from slopeNoSlipping function
