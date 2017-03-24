@@ -1,4 +1,4 @@
-function [positions, velocities, accelerations, final_time] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time)
+function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time)
     
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME
 
@@ -31,14 +31,12 @@ function [positions, velocities, accelerations, final_time] = brachistochrone(in
     elasped_time = 0;
     all_velocities = 1:length(slopes_theta);
     all_accelerations = 1:length(slopes_theta);
-    
-    oldPosition = initial_position;
-    
+        
     %% Calculate velocities, accelerations and times to reach each position
     for idx = 1:length(slopes_theta)
     
         setTheta(slopes_theta(idx));
-        [delta_position, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)),2);
+        [delta_postion, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)),2);
 
         if idx == 1
             all_velocities(idx) = norm(finalVelocity);
@@ -52,7 +50,6 @@ function [positions, velocities, accelerations, final_time] = brachistochrone(in
         end
 
         setOldVelocity(finalVelocity(1),finalVelocity(2));
-        oldPosition = delta_position + oldPosition;
     
     end
     
@@ -60,16 +57,27 @@ function [positions, velocities, accelerations, final_time] = brachistochrone(in
     final_time = initial_time + elasped_time;
     
     numOfPoints = floor(elasped_time/PLOT_TIME);
+    increment = floor(DIVISIONS / numOfPoints);
     
     velocities = 1:numOfPoints;
     accelerations = 1:numOfPoints;
-    positions = zeros(numOfPoints, 2);
+    x_positions = 1:numOfPoints;
+    y_positions = 1:numOfPoints;
     
-    for idx = 1:floor(DIVISIONS/numOfPoints):DIVISIONS-1
-        velocities(idx) = all_velocities(idx);
-        accelerations(idx) = all_accelerations(idx);
-        positions(idx, 1) = x(idx);
-        positions(idx, 2) = y(idx);
+    % always include initial value. 
+    % Would we wanna always include final value?
+    velocities(1) = all_velocities(1);
+    accelerations(1) = all_accelerations(1);
+    x_positions(1) = x(1);
+    y_positions(1) = y(1);
+    
+    for idx = 1:(numOfPoints-1)
+        velocities(idx) = all_velocities(idx*increment);
+        accelerations(idx) = all_accelerations(idx*increment);
+        x_positions(idx) = x(idx*increment);
+        y_positions(idx) = y(idx*increment);
     end
     
+    finalPosition = [x(length(x)), y(length(y))];
+            
 end
