@@ -57,7 +57,7 @@ if abs(abs(B)-abs(R))<0.05
     time = abs(sqrt(B/7.007).*t);
 else % derived formula
     f =@(x)(B/R)*(1/(sqrt(10/7*9.81)))*sqrt((B^2.*x+2*R^3-R^2.*x)./(2*B^2*R.*x-(B.^2)*x.^2));
-    time = abs(integral(f,0,4));
+    time = abs(integral(f,0,abs(Y)));
 end
 
 % store values to vectors
