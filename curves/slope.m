@@ -25,7 +25,7 @@ function [positions, velocities, accelerations, final_time] = slope(initial_velo
         y(n) = oldPosition(2);
         all_velocities(n) = norm(finalVelocity);
         all_accelerations(n) = norm(finalVelocity)/DELTA_TIME;
-        elasped_time = DELTA_TIME + elasped_time
+        elasped_time = DELTA_TIME + elasped_time;
         n = n + 1;
         setOldVelocity(finalVelocity(1), finalVelocity(2));
     end

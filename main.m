@@ -24,11 +24,10 @@ addpath './objects'
 %[positions, velocities, accelerations, final_time] = slope(initial_velocity, slope_theta, initial_position, initial_time, final_position)
 [positions, velocities, accelerations, final_time] = slope(velocity, pi/4, position , time, -0.916);
 
-%x = positions + velocities + accelerations + final_time
 elaspedTime = final_time;
 
 
-[x_positions, y_positions, velocities, accelerations, time, finalPosition] = brachistochrone(velocity, 14, position, elaspedTime);
+%[x_positions, y_positions, velocities, accelerations, time, finalPosition] = brachistochrone(velocity, 14, position, elaspedTime);
 
 Time_taken = time;
 
