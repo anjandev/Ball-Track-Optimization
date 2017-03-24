@@ -14,4 +14,5 @@ function [position, finalVelocity] = slopeNoSlipping(delta_Y,isBrachCurve)
     end
  
     position = getOldVelocity(0)*DELTA_TIME;
+    
 end
