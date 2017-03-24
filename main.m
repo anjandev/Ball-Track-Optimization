@@ -11,7 +11,7 @@ INERTIA = (2/5)*MASS*BALLRADIUS^2;
 
 
 DELTA_TIME = 0.01; % Smaller DELTA time increases precision of slope calculation
-PLOT_TIME = 2; % Plot every ___ Seconds
+PLOT_TIME = 0.01; % Plot every ___ Seconds
 
 velocity = [0.01, -0.01];
 time = 0;
@@ -33,6 +33,8 @@ elaspedTime = final_time;
 
 [x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = brachistochrone(velocity, 14, position, elaspedTime, omega(length(omega)));
 
+%[x_positions, y_positions, velocities, accelerations, time, finalPosition] = slope(velocity, pi/4, position, time, [0.916, -0.916])
+%plotFunction(x_positions, y_positions, velocities, accelerations, time, finalPosition)
 
 Time_taken = time;
 
