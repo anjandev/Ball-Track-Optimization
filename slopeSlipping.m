@@ -23,7 +23,7 @@
 % Position = velocity*time + 1/2 at^2
 %
 
-function[positionChange, finalVelocity] = slopeSlipping()
+function[positionChange, finalVelocity, acceleration] = slopeSlipping()
 global GRAVITY DELTA_TIME K_FRICTION MASS BALLRADIUS INERTIA 
 acceleration = GRAVITY*sin(getTheta) - K_FRICTION*GRAVITY*cos(getTheta)
 finalVelocity = getOldVelocity(0) + acceleration*DELTA_TIME*[cos(getTheta), -sin(getTheta)]
