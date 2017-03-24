@@ -14,16 +14,16 @@ velocity = [0.01, -0.01];
 time = 0;
 position = [1, 1];
 
-%addpath './curves'
-%addpath './objects'
+addpath './curves'
+addpath './objects'
 
-%[final_position, velocities, accelerations, time] = brachistochrone(velocity, 14, position, time);
+[final_position, velocities, accelerations, time] = brachistochrone(velocity, 14, position, time);
 
 %[positions, velocities, accelerations, final_time] = slope(initial_velocity, slope_theta, initial_position, initial_time, final_position)
-[positions, velocities, accelerations, final_time] = slope(velocity, 1, position , time, 1)
+[positions, velocities, accelerations, final_time] = slope(velocity, 1, position , time, 1);
 
 %x = positions + velocities + accelerations + final_time
-Time_taken = time
+Time_taken = final_time
 disp('Final Velocity (m/s)')
 disp('   V_x      V_y')
 disp(getOldVelocity(3))

@@ -14,16 +14,16 @@ global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME
 
 setOldVelocity(initial_velocity(1), initial_velocity(2));
 oldPosition = initial_position;
-setTheta(slope_theta);
+setTheta(slope_theta)
 
 n = 1;
 while oldPosition(2) > final_position
     [position, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
     oldPosition = position + oldPosition;
-    x(n) = oldPosition(1);
-    y(n) = oldPosition(2);
-    All_velocities(n) = norm(finalVelocity);
-    All_accelerations(n) = norm(finalVelocity)/DELTA_TIME;
+    positions(n) = oldPosition(1);
+    positions(n) = oldPosition(2);
+    velocities(n) = norm(finalVelocity);
+    accelerations(n) = norm(finalVelocity)/DELTA_TIME;
     n = n + 1;
     setOldVelocity(finalVelocity(1), finalVelocity(2));
     
@@ -41,11 +41,11 @@ final_time = elasped_time + initial_time;
     accelerations = 1:numOfPoints;
     positions = zeros(numOfPoints, 2);
     
-    for idx = 1:floor(n/numOfPoints):n-1
+    for idx = 1:floor(DIVISIONS/numOfPoints):DIVISIONS-1
         velocities(idx) = all_velocities(idx);
         accelerations(idx) = all_accelerations(idx);
-        positions(idx,1) = x(idx);
-        positions(idx,2) = y(idx);
+        positions(idx) = x(idx);
+        positions(idx) = y(idx);
     end
 
 end
