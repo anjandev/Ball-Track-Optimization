@@ -3,7 +3,7 @@ close all
 clc
 
 global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME K_COEF
-K_COEF = 0.25
+K_COEF = 0.25;
 GRAVITY = -9.81;
 BALLRADIUS = 1;
 MASS = 1;
@@ -24,8 +24,10 @@ addpath './objects'
 initial_omega = 0;
 %[final_position, velocities, accelerations, time] = brachistochrone(velocity, 14, position, time);
 
+slope_yaxis_end = -0.916
+
 %[positions, velocities, accelerations, final_time] = slope(initial_velocity, slope_theta, initial_position, initial_time, final_position)
-[positions, velocities, accelerations, final_time, omega, alpha] = slope(velocity, pi/4, position , time, -0.916);
+[positions, velocities, accelerations, final_time, omega, alpha] = slope(velocity, pi/4, position , time, slope_yaxis_end, initial_omega);
 
 elaspedTime = final_time;
 
