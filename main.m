@@ -3,8 +3,8 @@ close all
 clc
 
 global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME STATIC_FRICTION KINETIC_FRICTION
-KINETIC_FRICTION = 5;
-STATIC_FRICTION = 0.4;
+KINETIC_FRICTION = 0.15;
+STATIC_FRICTION = 0.10;
 
 GRAVITY = -9.81;
 BALLRADIUS = 1;
@@ -25,8 +25,7 @@ final_slope_position = [3, 3];
 addpath './curves'
 addpath './objects'
 
-%[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = brachistochrone(velocity, 2, position, time,omega);
-[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = slope(velocity, slope_angle, position, time, final_slope_position, omega);
+[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = brachistochrone(velocity, 2, position, time, omega);
 
 plotFunction(x_positions, y_positions, velocities, accelerations, time, [36, -36]);
 
