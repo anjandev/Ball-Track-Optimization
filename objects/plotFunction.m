@@ -12,7 +12,7 @@ function plotFunction(x_positions, y_positions, velocities,...
     %% PLOT POSITION
     subplot(2,2,1);
     plot(x_positions,y_positions,'*')
-    axis([0,xyMax,-xyMax,0]);
+    % axis([0,xyMax,-xyMax,0]);
     T_disp = final_time;
     title(['Position vs Time,    ',num2str(DELTA_TIME),'s per increment'])
     xlabel(['Time (s)       ' 'Current Time: ' num2str(T_disp) 's'])
