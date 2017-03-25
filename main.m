@@ -27,40 +27,29 @@ addpath './curves'
 addpath './objects'
 
 
-[x_positions, y_positions, velocities, accelerations, time, finalPosition,omega, alpha] = slope(velocity, slope_angle, position, time, end_xposition, omega);
-n = 1;
-for n = 1 : length(x_positions)
-    x_positions2(n) = x_positions(n);
-    y_positions2(n) = y_positions(n);
-    velocities2(n) = velocities(n);
-    accelerations2(n) = accelerations(n);
-end
+[x_positions1, y_positions1, velocities1, accelerations1, time, finalPosition,omega, alpha] = slope(velocity, slope_angle, position, time, end_xposition, omega);
+
+
 %% Getting initial conditions for the next slope
 time2 = time;
-position_after = [x_positions(length(x_positions)) y_positions(length(y_positions))]
+position_after = [x_positions1(length(x_positions1)) y_positions1(length(y_positions1))]
 velocity_after = getOldVelocity(0)
 
 
 [x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = brachistochrone(velocity_after, curve_size, position_after, time, omega);
 
+[x_positions2] = appendToend(x_positions1, x_positions);
+[y_positions2] = appendToend(y_positions1, y_positions);
+[velocities2] = appendToend(velocities1, velocities);
+[accelerations2] = appendToend(accelerations1, accelerations);
+
+
+
 %% Setting up all the values for plotting
-for x = 1:(length(x_positions))
-    x_positions2(x+n) = x_positions(x);
-    y_positions2(x+n) = y_positions(x);
-    velocities2(x+n) = velocities(x);
-    accelerations2(x+n) = accelerations(x);
-end
-time_final = time2+time;
-%%
-
-%[x_positions, y_positions, velocities, accelerations, time_final, finalPosition, omega, alpha] = brachistochrone(velocity, curve_size, position, time, omega);
-
+time_final = time; % Time elasped is already added to the time before in brachistochrone function
+% No need to add time
 
 plotFunction(x_positions2, y_positions2, velocities2, accelerations2, time_final, [36, -36]);
-%plotFunction(x_positions, y_positions, velocities, accelerations, time, [36, -36]);
-
-
-Time_taken = time;
 
 
 disp('Final Velocity (m/s)')
