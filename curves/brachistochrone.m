@@ -48,6 +48,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     for idx = 1:length(slopes_theta)
 
         setTheta(slopes_theta(idx));
+        
         if getTheta() > atan(KINETIC_FRICTION)
             [~, finalVelocity, acceleration] = slopeSlipping();
         else
