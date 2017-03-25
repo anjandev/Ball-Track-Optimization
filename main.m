@@ -28,16 +28,9 @@ addpath './objects'
 
 
 [x_positions1, y_positions1, velocities1, accelerations1, time, finalPosition,omega, alpha] = slope(velocity, slope_angle, position, time, end_xposition, omega);
+[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = brachistochrone(getOldVelocity(0), curve_size, finalPosition, time, omega);
 
-
-%% Getting initial conditions for the next slope
-time2 = time;
-position_after = [x_positions1(length(x_positions1)) y_positions1(length(y_positions1))]
-velocity_after = getOldVelocity(0)
-
-
-[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = brachistochrone(velocity_after, curve_size, position_after, time, omega);
-
+% THIS MUST BE RAN AFTER EACH NEW CURVE AFTER THE FIRST ONE
 [x_positions2] = appendToend(x_positions1, x_positions);
 [y_positions2] = appendToend(y_positions1, y_positions);
 [velocities2] = appendToend(velocities1, velocities);
