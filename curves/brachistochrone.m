@@ -50,7 +50,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         setTheta(slopes_theta(idx));
         
         if getTheta() > atan(KINETIC_FRICTION)
-            [~, finalVelocity, acceleration] = slopeSlipping();
+            [~, finalVelocity, acceleration] = slopeSlipping()
         else
             [~, finalVelocity, acceleration] = slopeNoSlipping((y(idx+1) - y(idx)),1);
         end
@@ -62,8 +62,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         else
             all_velocities(idx) = norm(finalVelocity);
             delta_time = norm([x(idx) - x(idx -1), y(idx) - y(idx -1)]) / norm(finalVelocity);
-            oldVelocity = getOldVelocity(0);
-            all_accelerations(idx) = acceleration;
+            all_accelerations(idx) = (finalVelocity - getOldVelocity(0)) / delta_time;
             elasped_time = delta_time + elasped_time;
         end
 
