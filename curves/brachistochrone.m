@@ -77,7 +77,8 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         else
             all_velocities(idx) = norm(finalVelocity);
             delta_time = norm([x(idx) - x(idx -1), y(idx) - y(idx -1)]) / norm(finalVelocity);
-            all_accelerations(idx) = norm((finalVelocity - [getOldVelocity(1), getOldVelocity(2)]) / delta_time);
+            %all_accelerations(idx) = norm((finalVelocity - [getOldVelocity(1), getOldVelocity(2)]) / delta_time);
+            all_accelerations(idx) = acceleration;
             elasped_time = delta_time + elasped_time;
             setOldVelocity(finalVelocity(1) + acceleration*cos(getTheta())*delta_time,finalVelocity(2) + acceleration*sin(getTheta())*delta_time);
         end

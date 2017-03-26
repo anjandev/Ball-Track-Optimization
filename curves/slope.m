@@ -23,8 +23,8 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
     if(initial_position(1) > final_position(1))
 
         while  oldPosition(1) >  final_position(1)
-            if getTheta() > atan(STATIC_FRICTION)
-                [deltaPosition, finalVelocity, acceleration] = slopeSlipping();
+            if STATIC_FRICTION < abs((2/7)*tan(getTheta()))
+                [deltaPosition, finalVelocity, acceleration] = slopeSlipping((getOldVelocity(2))*DELTA_TIME, 0);
                 all_accelerations(n) = acceleration;
             else
                 [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
@@ -42,8 +42,8 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
 
     else % moving from left to right
         while  oldPosition(1) < final_position(1)
-            if getTheta() > atan(STATIC_FRICTION)
-                [deltaPosition, finalVelocity, acceleration] = slopeSlipping()
+            if STATIC_FRICTION < abs((2/7)*tan(getTheta()))
+                [deltaPosition, finalVelocity, acceleration] = slopeSlipping((getOldVelocity(2))*DELTA_TIME, 0);
                 all_accelerations(n) = acceleration;
             else
                 [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);

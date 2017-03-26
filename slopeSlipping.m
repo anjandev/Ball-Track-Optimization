@@ -9,8 +9,8 @@ function[positionChange, finalVelocity, acceleration] = slopeSlipping(deltaPosit
         finalVelocity = getOldVelocity(0) + acceleration*delta_time*[cos(getTheta()),sin(getTheta())];
         positionChange = getOldVelocity(0)*delta_time + (1/2)*acceleration*[cos(getTheta()),sin(getTheta())]*delta_time^2;
     else
-        finalVelocity = getOldVelocity(0) + acceleration*DELTA_TIME*[cos(getTheta()),sin(getTheta())];
-        positionChange = getOldVelocity(0)*DELTA_TIME + (1/2)*acceleration*[cos(getTheta()),sin(getTheta())]*DELTA_TIME^2; 
+        finalVelocity = getOldVelocity(0) + abs(acceleration)*DELTA_TIME*[cos(getTheta()),-sin(getTheta())];
+        positionChange = getOldVelocity(0)*DELTA_TIME + (1/2)*abs(acceleration)*[cos(getTheta()),-sin(getTheta())]*DELTA_TIME^2; 
     end
     %omega = alpha*DELTA_TIME
     %alpha = (K_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA 
