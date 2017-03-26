@@ -92,7 +92,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     for idx = 1:(numOfPoints-1)
 
         %% finding the alpha and omega depending on slip condition
-        if getTheta() > atan(STATIC_FRICTION)
+        if slopes_theta(idx) > atan(STATIC_FRICTION)
             % slip
             alpha(idx) = (K_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
             if idx == 1
