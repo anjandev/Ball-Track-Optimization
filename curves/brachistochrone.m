@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition, omega, alpha] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time,initial_omega)
+function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time,initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
 
@@ -49,8 +49,9 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
 
         setTheta(slopes_theta(idx));
         
-        if getTheta() > atan(STATIC_FRICTION)
+        if getTheta() > -atan(STATIC_FRICTION)
             [~, finalVelocity, acceleration] = slopeSlipping();
+            idx
         else
             [~, finalVelocity, acceleration] = slopeNoSlipping((y(idx+1) - y(idx)),1);
         end
@@ -59,15 +60,16 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         if idx == 1
             all_velocities(idx) = norm(finalVelocity);
             all_accelerations(idx) = acceleration;
+            setOldVelocity(finalVelocity(1),finalVelocity(2));
         else
             all_velocities(idx) = norm(finalVelocity);
             delta_time = norm([x(idx) - x(idx -1), y(idx) - y(idx -1)]) / norm(finalVelocity);
-            oldVelocity = getOldVelocity(0);
             all_accelerations(idx) = acceleration;
             elasped_time = delta_time + elasped_time;
+            setOldVelocity(finalVelocity(1) + acceleration*cos(getTheta())*delta_time,finalVelocity(2) + acceleration*sin(getTheta())*delta_time);
         end
 
-        setOldVelocity(finalVelocity(1),finalVelocity(2));
+        
 
     end
 
@@ -91,19 +93,19 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
 
     for idx = 1:(numOfPoints-1)
 
-        %% finding the alpha and omega depending on slip condition
-        if slopes_theta(idx) > atan(STATIC_FRICTION)
-            % slip
-            alpha(idx) = (K_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
-            if idx == 1
-                omega(idx) = alpha(idx)*elasped_time + initial_omega;
-            else
-                omega(idx) = alpha(idx)*elasped_time + omega(idx-1);
-            end
-        else % NO SLIPPING
-            alpha(idx) = accelerations(idx)/BALLRADIUS;
-            omega(idx) = velocities(idx)/BALLRADIUS;
-        end
+%         % finding the alpha and omega depending on slip condition
+%         if getTheta() > -atan(STATIC_FRICTION)
+%             slip
+%             alpha = (KINETIC_FRICTION*cos(slopes_theta(idx*increment))*MASS*GRAVITY*BALLRADIUS)/INERTIA;
+%             if idx == 1
+%                 omega(idx) = alpha*elasped_time + initial_omega;
+%             else
+%                 omega(idx) = alpha*elasped_time + omega(idx-1);
+%             end
+%         else % NO SLIPPING
+%             alpha(idx) = accelerations(idx)/BALLRADIUS;
+%             omega(idx) = velocities(idx)/BALLRADIUS;
+%         end
 
 
         velocities(idx) = all_velocities(idx*increment);
@@ -112,12 +114,13 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         y_positions(idx) = y(idx*increment);
 
 
-        finalPosition = [x(length(x)), y(length(y))];
+        
     end
     
     velocities(length(velocities)) = all_velocities(length(all_velocities));
     accelerations(length(velocities)) = all_accelerations(length(all_accelerations));
     x_positions(length(velocities)) = x(length(x));
     y_positions(length(velocities)) = y(length(y));
+    finalPosition = [x(length(x)), y(length(y))];
 
 end

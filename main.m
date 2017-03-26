@@ -5,8 +5,8 @@ clc
 global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME STATIC_FRICTION KINETIC_FRICTION
 
 % Kinetic friction is less thann static friction
-KINETIC_FRICTION = 0.10;
-STATIC_FRICTION = 0.15;
+KINETIC_FRICTION = 0.20;
+STATIC_FRICTION = 0.30;
 
 GRAVITY = -9.81;
 BALLRADIUS = 1;
@@ -27,7 +27,7 @@ final_slope_position = [3, 3];
 addpath './curves'
 addpath './objects'
 
-[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = brachistochrone(velocity, 2, position, time, omega);
+[x_positions, y_positions, velocities, accelerations, time, finalPosition] = brachistochrone(velocity, 2, position, time, omega);
 
 plotFunction(x_positions, y_positions, velocities, accelerations, time, [36, -36]);
 

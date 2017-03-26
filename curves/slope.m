@@ -85,7 +85,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
         x_positions(idx) = x(idx*increment);
         y_positions(idx) = y(idx*increment);
 
-        if getTheta() > atan(STATIC_FRICTION)
+        if getTheta() < atan(STATIC_FRICTION)
             % SLIPPING
             alpha(idx) = (KINETIC_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
             if idx == 1
