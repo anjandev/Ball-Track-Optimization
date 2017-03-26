@@ -1,6 +1,6 @@
 function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition, omega, alpha] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time,initial_omega)
 
-    global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION
+    global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
 
     % BRACHISTOCHRONE
     % Funcntion takes in initial parameters, generates a curve and outputs
@@ -49,7 +49,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
 
         setTheta(slopes_theta(idx));
         
-        if getTheta() > atan(KINETIC_FRICTION)
+        if getTheta() > atan(STATIC_FRICTION)
             [~, finalVelocity, acceleration] = slopeSlipping();
         else
             [~, finalVelocity, acceleration] = slopeNoSlipping((y(idx+1) - y(idx)),1);
@@ -92,7 +92,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     for idx = 1:(numOfPoints-1)
 
         %% finding the alpha and omega depending on slip condition
-        if getTheta() > atan(KINETIC_FRICTION)
+        if getTheta() > atan(STATIC_FRICTION)
             % slip
             alpha(idx) = (K_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
             if idx == 1
