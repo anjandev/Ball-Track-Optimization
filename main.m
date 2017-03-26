@@ -27,8 +27,8 @@ final_slope_position = [3, 3];
 addpath './curves'
 addpath './objects'
 
-[x_positions, y_positions, velocities, accelerations, time, finalPosition] = brachistochrone(velocity, 2, position, time, omega);
-%[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = slope(velocity, slope_angle, position, time, [0.916,-0.64771], omega);
+%[x_positions, y_positions, velocities, accelerations, time, finalPosition] = brachistochrone(velocity, 2, position, time, omega);
+[x_positions, y_positions, velocities, accelerations, time, finalPosition, omega, alpha] = slope(velocity, position, time, [0.916,-0.64771], omega);
 plotFunction(x_positions, y_positions, velocities, accelerations, time, [36, -36]);
 
 

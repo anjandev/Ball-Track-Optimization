@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, time, finalPosition,omega, alpha] = slope(initial_velocity, slope_theta, initial_position, initial_time, final_position, initial_omega)
+function [x_positions, y_positions, velocities, accelerations, time, finalPosition,omega, alpha] = slope(initial_velocity, initial_position, initial_time, final_position, initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
     
@@ -14,7 +14,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
 
     setOldVelocity(initial_velocity(1), initial_velocity(2));
     oldPosition = initial_position;
-    setTheta(slope_theta);
+    setTheta(abs(atan((initial_position(2) - final_position(2))/(initial_position(1) - final_position(1)))));
     elasped_time = 0;
     n = 1;
 
