@@ -1,6 +1,6 @@
 function [x_positions, y_positions, velocities, accelerations, time, finalPosition,omega, alpha] = slope(initial_velocity, slope_theta, initial_position, initial_time, final_position, initial_omega)
 
-    global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION 
+    global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
     
 
     % SLOPE
@@ -23,8 +23,8 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
     if(initial_position(1) > final_position(1))
 
         while  oldPosition(1) >  final_position(1)
-            if getTheta() > atan(KINETIC_FRICTION)
-                [deltaPosition, finalVelocity, acceleration] = slopeSlipping();
+            if STATIC_FRICTION < abs((2/7)*tan(getTheta()))
+                [deltaPosition, finalVelocity, acceleration] = slopeSlipping((getOldVelocity(2))*DELTA_TIME, 0);
                 all_accelerations(n) = acceleration;
             else
                 [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
@@ -42,8 +42,8 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
 
     else % moving from left to right
         while  oldPosition(1) < final_position(1)
-            if getTheta() > atan(KINETIC_FRICTION)
-                [deltaPosition, finalVelocity, acceleration] = slopeSlipping()
+            if STATIC_FRICTION < abs((2/7)*tan(getTheta()))
+                [deltaPosition, finalVelocity, acceleration] = slopeSlipping((getOldVelocity(2))*DELTA_TIME, 0);
                 all_accelerations(n) = acceleration;
             else
                 [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
@@ -85,7 +85,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
         x_positions(idx) = x(idx*increment);
         y_positions(idx) = y(idx*increment);
 
-        if getTheta() > atan(KINETIC_FRICTION)
+        if getTheta() < atan(STATIC_FRICTION)
             % SLIPPING
             alpha(idx) = (KINETIC_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
             if idx == 1
@@ -97,6 +97,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
             alpha(idx) = accelerations(idx)/BALLRADIUS;
             omega(idx) = velocities(idx)/BALLRADIUS;
         end
+        
     end
 
     finalPosition = [x(length(x)), y(length(y))];
