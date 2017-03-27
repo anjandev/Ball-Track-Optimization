@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time,initial_omega)
+function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition, omegas, alphas] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time, initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
 
@@ -63,8 +63,18 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         
         if  STATIC_FRICTION < abs((2/7)*tan(getTheta()))
             [~, finalVelocity, acceleration] = slopeSlipping([(x(idx+1) - x(idx)), (y(idx+1) - y(idx))] ,1);
+            all_accelerations(idx) = acceleration;
+            all_alpha(idx) = (KINETIC_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
+
+            if idx ==1
+                all_omega(idx) = initial_omega;
+            else
+                all_omega(idx) = all_omega(idx-1) + all_alpha(idx);
+            end
         else
             [~, finalVelocity, acceleration] = slopeNoSlipping((y(idx+1) - y(idx)),1);
+            all_alpha(idx) = acceleration / BALLRADIUS;
+            all_omega(idx) = norm(finalVelocity) / BALLRADIUS;
         end
 
         delta_time = 0;
@@ -89,45 +99,32 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
 
     numOfPoints = floor(elasped_time/PLOT_TIME);
     increment = floor(DIVISIONS / numOfPoints);
-
+    
     velocities = 1:numOfPoints;
     accelerations = 1:numOfPoints;
+    omegas = 1:numOfPoints;
+    alphas = 1:numOfPoints;
 
-
+    
     % always include initial value.
     % Would we wanna always include final value?
     velocities(1) = all_velocities(1);
     accelerations(1) = all_accelerations(1);
-
-
+    omegas(1) = all_omega(1);
+    alphas(1) = all_alpha(1);
+    
     for idx = 1:(numOfPoints-1)
-
-%         % finding the alpha and omega depending on slip condition
-%         if getTheta() > -atan(STATIC_FRICTION)
-%             slip
-%             alpha = (KINETIC_FRICTION*cos(slopes_theta(idx*increment))*MASS*GRAVITY*BALLRADIUS)/INERTIA;
-%             if idx == 1
-%                 omega(idx) = alpha*elasped_time + initial_omega;
-%             else
-%                 omega(idx) = alpha*elasped_time + omega(idx-1);
-%             end
-%         else % NO SLIPPING
-%             alpha(idx) = accelerations(idx)/BALLRADIUS;
-%             omega(idx) = velocities(idx)/BALLRADIUS;
-%         end
-
 
         velocities(idx) = all_velocities(idx*increment);
         accelerations(idx) = all_accelerations(idx*increment);
-
-
+        omegas(idx) = all_omega(idx*increment);
+        alphas(idx) = all_alpha(idx*increment);
         
     end
     
     velocities(length(velocities)) = all_velocities(length(all_velocities));
     accelerations(length(velocities)) = all_accelerations(length(all_accelerations));
-    x_positions(length(velocities) + 1) = x(length(x));
-    y_positions(length(velocities) + 1) = y(length(y));
+
     
     finalPosition = [x(length(x)), y(length(y))];
 
