@@ -54,6 +54,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
             else
                 [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
                 all_accelerations(n) = norm(finalVelocity - getOldVelocity(0))/DELTA_TIME;
+                idx
             end
 
             oldPosition = deltaPosition + oldPosition
