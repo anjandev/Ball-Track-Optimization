@@ -63,7 +63,6 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         
         if  STATIC_FRICTION < abs((2/7)*tan(getTheta()))
             [~, finalVelocity, acceleration] = slopeSlipping([(x(idx+1) - x(idx)), (y(idx+1) - y(idx))] ,1);
-            idx
         else
             [~, finalVelocity, acceleration] = slopeNoSlipping((y(idx+1) - y(idx)),1);
         end

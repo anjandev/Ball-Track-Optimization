@@ -12,9 +12,15 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
     % TODO: OUTPUT THE positions, velocities, accelerations
 
 
-    setOldVelocity(initial_velocity(1), initial_velocity(2));
+    
+    
     oldPosition = initial_position;
-    setTheta(abs(atan((initial_position(2) - final_position(2))/(initial_position(1) - final_position(1)))));
+    setTheta(atan((initial_position(2) - final_position(2))/(initial_position(1) - final_position(1))));
+    
+    
+    setOldVelocity(norm(initial_velocity)*cos(getTheta()), norm(initial_velocity)*sin(getTheta()));
+
+    
     elasped_time = 0;
     n = 1;
 
@@ -27,11 +33,11 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
                 [deltaPosition, finalVelocity, acceleration] = slopeSlipping((getOldVelocity(2))*DELTA_TIME, 0);
                 all_accelerations(n) = acceleration;
             else
-                [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
+                [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME, 0);
                 all_accelerations(n) = norm(finalVelocity - getOldVelocity(0))/DELTA_TIME;
             end
 
-            oldPosition = deltaPosition + oldPosition
+            oldPosition = deltaPosition + oldPosition;
             x(n) = oldPosition(1);
             y(n) = oldPosition(2);
             all_velocities(n) = norm(finalVelocity);
