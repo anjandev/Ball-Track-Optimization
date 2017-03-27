@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, time, finalPosition,omega, alpha] = slope(initial_velocity, initial_position, initial_time, final_position, initial_omega)
+function [x_positions, y_positions, velocities, accelerations, time, finalPosition] = slope(initial_velocity, initial_position, initial_time, final_position, initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
     
@@ -54,7 +54,6 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
             else
                 [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
                 all_accelerations(n) = norm(finalVelocity - getOldVelocity(0))/DELTA_TIME;
-                idx
             end
 
             oldPosition = deltaPosition + oldPosition
@@ -92,18 +91,18 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
         x_positions(idx) = x(idx*increment);
         y_positions(idx) = y(idx*increment);
 
-        if STATIC_FRICTION < abs((2/7)*tan(getTheta()))
-            % SLIPPING
-            alpha(idx) = (KINETIC_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
-            if idx == 1
-                omega(idx) = alpha(idx)*elasped_time + initial_omega;
-            else
-                omega(idx) = alpha(idx)*elasped_time + omega(idx-1);
-            end
-        else % NO SLIPPING
-            alpha(idx) = accelerations(idx)/BALLRADIUS;
-            omega(idx) = velocities(idx)/BALLRADIUS;
-        end
+%          if STATIC_FRICTION < abs((2/7)*tan(getTheta()))
+%              % SLIPPING
+%              alpha(idx) = (KINETIC_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
+%              if idx == 1
+%                  omega(idx) = alpha(idx)*elasped_time + initial_omega;
+%              else
+%                  omega(idx) = alpha(idx)*elasped_time + omega(idx-1);
+%              end
+%          else % NO SLIPPING
+%              alpha(idx) = accelerations(idx)/BALLRADIUS;
+%              omega(idx) = velocities(idx)/BALLRADIUS;
+%          end
         
     end
 
