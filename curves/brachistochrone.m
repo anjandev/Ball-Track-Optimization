@@ -63,18 +63,10 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
         
         if  STATIC_FRICTION < abs((2/7)*tan(getTheta()))
             [~, finalVelocity, acceleration] = slopeSlipping([(x(idx+1) - x(idx)), (y(idx+1) - y(idx))] ,1);
-            all_accelerations(idx) = acceleration;
-            all_alpha(idx) = (KINETIC_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
 
-            if idx ==1
-                all_omega(idx) = initial_omega;
-            else
-                all_omega(idx) = all_omega(idx-1) + all_alpha(idx);
-            end
         else
             [~, finalVelocity, acceleration] = slopeNoSlipping((y(idx+1) - y(idx)),1);
-            all_alpha(idx) = acceleration / BALLRADIUS;
-            all_omega(idx) = norm(finalVelocity) / BALLRADIUS;
+
         end
 
         delta_time = 0;
@@ -91,6 +83,20 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
             elasped_time = delta_time + elasped_time;
             setOldVelocity(finalVelocity(1) + acceleration*cos(getTheta())*delta_time,finalVelocity(2) + acceleration*sin(getTheta())*delta_time);
         end
+        
+        if  STATIC_FRICTION < abs((2/7)*tan(getTheta()))
+            all_alpha(idx) = (KINETIC_FRICTION*cos(getTheta)*MASS*GRAVITY*BALLRADIUS)/INERTIA;
+            if idx ==1
+                all_omega(idx) = initial_omega;
+            else
+                all_omega(idx) = all_omega(idx-1) + all_alpha(idx)*delta_time;
+            end
+            
+        else
+            all_alpha(idx) = acceleration / BALLRADIUS;
+            all_omega(idx) = norm(finalVelocity) / BALLRADIUS;
+        end
+        
         timeSinceLastSnap = timeSinceLastSnap + delta_time;
     end
 

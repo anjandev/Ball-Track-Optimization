@@ -15,7 +15,7 @@ INERTIA = (2/5)*MASS*BALLRADIUS^2;
 
 
 DELTA_TIME = 0.001; % Smaller DELTA time increases precision of slope calculation
-PLOT_TIME = 0.1; % Plot every ___ Seconds
+PLOT_TIME = 0.06; % Plot every ___ Seconds
 
 velocity = [0.01, -0.01];
 time = 0;
@@ -32,7 +32,7 @@ addpath './objects'
 % slope down 3 to the right and 4 units down
 [x_positions2, y_positions2, velocities2, accelerations2, time, finalPosition2, omegas2, alphas2] = slope(getOldVelocity(0), finalPosition, time, [finalPosition(1)+4 , finalPosition(2) + 0], omega);
 
-[x_positions3, y_positions3, velocities3, accelerations3, time, finalPosition3, omegas3, alphas3] = slope(getOldVelocity(0), finalPosition2, time, [finalPosition2(1)+4 , finalPosition2(2) + 4], omega);
+[x_positions3, y_positions3, velocities3, accelerations3, time, finalPosition3, omegas3, alphas3] = slope(getOldVelocity(0), finalPosition2, time, [finalPosition2(1)+4 , finalPosition2(2) + 2], omega);
 
 % append the vectors returned by second function to the vec
 x_positions = [x_positions x_positions2 x_positions3]

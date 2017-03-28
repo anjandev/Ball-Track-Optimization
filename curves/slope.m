@@ -66,7 +66,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
                 if n ==1
                     all_omega(n) = initial_omega;
                 else
-                    all_omega(n) = all_omega(n-1) + all_alpha(n);
+                    all_omega(n) = all_omega(n-1) + all_alpha(n)*DELTA_TIME;
                 end
             else
                 [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
@@ -107,7 +107,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
     omegas(1) = all_omega(1);
     alphas(1) = all_alpha(1);
 
-    for idx = 1:(numOfPoints)
+    for idx = 2:(numOfPoints)
         velocities(idx) = all_velocities(idx*increment);
         accelerations(idx) = all_accelerations(idx*increment);
         x_positions(idx) = x(idx*increment);
