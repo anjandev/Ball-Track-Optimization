@@ -2,7 +2,7 @@ function[positionChange, finalVelocity, acceleration] = slopeSlipping(deltaPosit
 
     global GRAVITY DELTA_TIME KINETIC_FRICTION MASS BALLRADIUS INERTIA MOVING_RIGHT MOVING_LEFT
     
-    acceleration = GRAVITY*sin(getTheta()) - KINETIC_FRICTION*GRAVITY*cos(getTheta());
+    acceleration = GRAVITY*sin(getTheta()) + KINETIC_FRICTION*GRAVITY*cos(getTheta());
     
     if(isBrach)
         delta_time = norm(deltaPosition) / norm([getOldVelocity(1), getOldVelocity(2)]);
