@@ -35,12 +35,12 @@ addpath './objects'
 [x_positions3, y_positions3, velocities3, accelerations3, time, finalPosition3, omegas3, alphas3] = slope(getOldVelocity(0), finalPosition2, time, [finalPosition2(1)+4 , finalPosition2(2) + 2], omega);
 
 % append the vectors returned by second function to the vec
-x_positions = [x_positions x_positions2 x_positions3]
-y_positions = [y_positions y_positions2 y_positions3]
-velocities = [velocities velocities2 velocities3]
-accelerations = [accelerations accelerations2 accelerations3]
-omegas = [omegas omegas2 omegas3]
-alphas = [alphas alphas2 alphas3]
+x_positions = [x_positions x_positions2 x_positions3];
+y_positions = [y_positions y_positions2 y_positions3];
+velocities = [velocities velocities2 velocities3];
+accelerations = [accelerations accelerations2 accelerations3];
+omegas = [omegas omegas2 omegas3];
+alphas = [alphas alphas2 alphas3];
 
 plotFunction(x_positions, y_positions, velocities, accelerations, time, alphas, omegas, [36, -36]);
 
