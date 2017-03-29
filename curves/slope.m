@@ -98,15 +98,6 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
     y_positions = 1:numOfPoints;
 
 
-    % always include initial value.
-    % Would we wanna always include final value?
-%     velocities(1) = all_velocities(1);
-%     accelerations(1) = all_accelerations(1);
-%     omegas(1) = all_omega(1);
-%     alphas(1) = all_alpha(1);
-%     x_positions(1) = x(increment);
-%     y_positions(1) = y(increment);
-
     for idx = 1:(numOfPoints)
         velocities(idx) = all_velocities(idx*increment);
         accelerations(idx) = all_accelerations(idx*increment);
