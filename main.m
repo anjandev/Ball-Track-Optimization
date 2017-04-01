@@ -25,7 +25,7 @@ position = [INCH_TO_METER, -INCH_TO_METER];
 omega = 0;
 slope_angle = pi/6;
 final_slope_position = [0, 3];
-energy_remain = 0.3;
+energy_remain = 0.12;
 
 
 addpath './curves'
@@ -49,7 +49,7 @@ accelerations4(1) = impulse_acceleration;
 x_positions = [x_positions x_positions1 x_positions2 x_positions3,x_positions4];
 y_positions = [y_positions y_positions1 y_positions2 y_positions3,y_positions4];
 velocities = [velocities velocities1 velocities2 velocities3,velocities4];
-accelerations = -[accelerations accelerations1 accelerations2,accelerations3,accelerations4];
+accelerations = abs([accelerations accelerations1 accelerations2,accelerations3,accelerations4]);
 omegas = [omegas omegas1 omegas2 omegas3,omegas4];
 alphas = [alphas alphas1 alphas2 alphas3,alphas4];
 
