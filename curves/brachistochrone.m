@@ -10,7 +10,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     setOldVelocity(initial_velocity(1), initial_velocity(2));
 
     %% Generate curve
-    DIVISIONS = 100000;
+    DIVISIONS = 1000;
     t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
     
 
