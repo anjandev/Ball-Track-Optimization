@@ -32,6 +32,7 @@ function plotFunction(x_positions, y_positions, velocities,...
     title('Acceleration vs Time');
     xlabel('Time (s)');
     ylabel('Acceleration (m/s^2)');
+    axis([-inf,inf,-20,20])
 
 
     %% PLOT ANGULAR ACCELERATION VS TIME 
