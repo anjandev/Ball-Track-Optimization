@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, time, finalPosition, omegas, alphas] = slope(initial_velocity, initial_position, initial_time, final_position, initial_omega)
+function [x_positions, y_positions, velocities, accelerations, time, finalPosition, omegas, alphas, omegaFinal] = slope(initial_velocity, initial_position, initial_time, final_position, initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
     
@@ -116,7 +116,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
         alphas(idx) = all_alpha(idx*increment);
         
     end
-
+    omegaFinal = omegas(length(omegas));
     finalPosition = [x(length(x)), y(length(y))];
 
 

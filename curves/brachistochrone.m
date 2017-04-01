@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition, omegas, alphas] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time, initial_omega)
+function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition, omegas, alphas, omegaFinal] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time, initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
 
@@ -26,8 +26,8 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     %         [~, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)),1);
 
 
-    x = initial_position(1) + (curve_size)*(t-sin(t)); %% x equation
-    y = initial_position(2) + (curve_size)*(-1+cos(t)); %% y equation
+    x = initial_position(1) + (curve_size)*0.19404*(t-sin(t)); %% x equation
+    y = initial_position(2) + (curve_size)*0.3048*(-1+cos(t)); %% y equation
 
 
     %% Find Slopes
@@ -119,7 +119,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     omegas(1) = all_omega(1);
     alphas(1) = all_alpha(1);
     
-    for idx = 1:(numOfPoints-1)
+    for idx = 1:(numOfPoints)
 
         velocities(idx) = all_velocities(idx*increment);
         accelerations(idx) = all_accelerations(idx*increment);
@@ -130,7 +130,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     
     velocities(length(velocities)) = all_velocities(length(all_velocities));
     accelerations(length(velocities)) = all_accelerations(length(all_accelerations));
-
+    omegaFinal = omegas(length(omegas));
     
     finalPosition = [x(length(x)), y(length(y))];
 
