@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, time, finalPosition, omegas, alphas] = slope(initial_velocity, initial_position, initial_time, final_position, initial_omega)
+function [x_positions, y_positions, velocities, accelerations, time, finalPosition, omegas, alphas, omegaFinal] = slope(initial_velocity, initial_position, initial_time, final_position, initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
     
@@ -40,8 +40,8 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
                     all_omega(n) = all_omega(n-1) + all_alpha(n);
                 end
             else
-                [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME, 0);
-                all_accelerations(n) = norm(finalVelocity - getOldVelocity(0))/DELTA_TIME;
+                [deltaPosition, finalVelocity,acceleration] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME, 0);
+                all_accelerations(n) = acceleration;
                 all_alpha(n) = all_accelerations(n) / BALLRADIUS;
                 all_omega(n) = norm(final_velocity) / BALLRADIUS;
             end
@@ -69,8 +69,8 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
                     all_omega(n) = all_omega(n-1) + all_alpha(n)*DELTA_TIME;
                 end
             else
-                [deltaPosition, finalVelocity] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
-                all_accelerations(n) = norm(finalVelocity - getOldVelocity(0))/DELTA_TIME;
+                [deltaPosition, finalVelocity, acceleration] = slopeNoSlipping((getOldVelocity(2))*DELTA_TIME,1);
+                all_accelerations(n) = acceleration;
                 all_alpha(n) = all_accelerations(n) / BALLRADIUS;
                 all_omega(n) = norm(finalVelocity) / BALLRADIUS;
             end
@@ -106,8 +106,8 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
         omegas(idx) = all_omega(idx*increment);
         alphas(idx) = all_alpha(idx*increment); 
     end
-    
 
+    omegaFinal = omegas(length(omegas));
     finalPosition = [x(length(x)), y(length(y))];
 
 

@@ -1,4 +1,4 @@
-function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition, omegas, alphas] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time, initial_omega)
+function [x_positions, y_positions, velocities, accelerations, final_time, finalPosition, omegas, alphas, omegaFinal] = brachistochrone(initial_velocity, curve_size, initial_position, initial_time, initial_omega)
 
     global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME KINETIC_FRICTION STATIC_FRICTION
 
@@ -10,7 +10,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     setOldVelocity(initial_velocity(1), initial_velocity(2));
 
     %% Generate curve
-    DIVISIONS = 100000;
+    DIVISIONS = 1000;
     t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
     
 
@@ -26,8 +26,8 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     %         [~, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)),1);
 
 
-    x = initial_position(1) + (curve_size)*(t-sin(t)); %% x equation
-    y = initial_position(2) + (curve_size)*(-1+cos(t)); %% y equation
+    x = initial_position(1) + (curve_size)*0.19404*(t-sin(t)); %% x equation
+    y = initial_position(2) + (curve_size)*0.3048*(-1+cos(t)); %% y equation
 
 
     %% Find Slopes
@@ -110,9 +110,15 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     accelerations = 1:numOfPoints;
     omegas = 1:numOfPoints;
     alphas = 1:numOfPoints;
-  
-    for idx = 1:(numOfPoints-1)
-
+    
+    % always include initial value.
+    % Would we wanna always include final value?
+    velocities(1) = all_velocities(1);
+    accelerations(1) = all_accelerations(1);
+    omegas(1) = all_omega(1);
+    alphas(1) = all_alpha(1);
+    
+    for idx = 1:(numOfPoints)
         velocities(idx) = all_velocities(idx*increment);
         accelerations(idx) = all_accelerations(idx*increment);
         omegas(idx) = all_omega(idx*increment);
@@ -122,10 +128,9 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     
     velocities(length(velocities)) = all_velocities(length(all_velocities));
     accelerations(length(velocities)) = all_accelerations(length(all_accelerations));
+    omegaFinal = omegas(length(omegas));
     omegas(length(velocities)) = all_omega(length(all_velocities));
     alphas(length(velocities)) = all_alpha(length(all_velocities));
-    
-
     
     finalPosition = [x(length(x)), y(length(y))];
 
