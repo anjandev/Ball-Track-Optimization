@@ -110,7 +110,6 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     accelerations = 1:numOfPoints;
     omegas = 1:numOfPoints;
     alphas = 1:numOfPoints;
-
     
     % always include initial value.
     % Would we wanna always include final value?
@@ -120,7 +119,6 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     alphas(1) = all_alpha(1);
     
     for idx = 1:(numOfPoints)
-
         velocities(idx) = all_velocities(idx*increment);
         accelerations(idx) = all_accelerations(idx*increment);
         omegas(idx) = all_omega(idx*increment);
@@ -131,6 +129,8 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     velocities(length(velocities)) = all_velocities(length(all_velocities));
     accelerations(length(velocities)) = all_accelerations(length(all_accelerations));
     omegaFinal = omegas(length(omegas));
+    omegas(length(velocities)) = all_omega(length(all_velocities));
+    alphas(length(velocities)) = all_alpha(length(all_velocities));
     
     finalPosition = [x(length(x)), y(length(y))];
 

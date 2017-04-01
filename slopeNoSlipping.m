@@ -13,7 +13,7 @@ function [position, finalVelocity, acceleration] = slopeNoSlipping(delta_Y,isBra
         finalVelocity = (omegaFinal*BALLRADIUS)*[cos(getTheta),sin(getTheta)];
     end
     
-    acceleration = sin(getTheta)*GRAVITY + STATIC_FRICTION * GRAVITY *cos(getTheta);
+    acceleration = (5/7)*GRAVITY*sin(getTheta());
     
     position = getOldVelocity(0)*DELTA_TIME;
     

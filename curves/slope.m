@@ -75,7 +75,7 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
                 all_omega(n) = norm(finalVelocity) / BALLRADIUS;
             end
 
-            oldPosition = deltaPosition + oldPosition
+            oldPosition = deltaPosition + oldPosition;
             x(n) = oldPosition(1);
             y(n) = oldPosition(2);
             all_velocities(n) = norm(finalVelocity);
@@ -98,24 +98,15 @@ function [x_positions, y_positions, velocities, accelerations, time, finalPositi
     y_positions = 1:numOfPoints;
 
 
-    % always include initial value.
-    % Would we wanna always include final value?
-    velocities(1) = all_velocities(1);
-    accelerations(1) = all_accelerations(1);
-    x_positions(1) = x(1);
-    y_positions(1) = y(1);
-    omegas(1) = all_omega(1);
-    alphas(1) = all_alpha(1);
-
-    for idx = 2:(numOfPoints)
+    for idx = 1:(numOfPoints)
         velocities(idx) = all_velocities(idx*increment);
         accelerations(idx) = all_accelerations(idx*increment);
         x_positions(idx) = x(idx*increment);
         y_positions(idx) = y(idx*increment);
         omegas(idx) = all_omega(idx*increment);
-        alphas(idx) = all_alpha(idx*increment);
-        
+        alphas(idx) = all_alpha(idx*increment); 
     end
+
     omegaFinal = omegas(length(omegas));
     finalPosition = [x(length(x)), y(length(y))];
 
