@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME STATIC_FRICTION KINETIC_FRICTION
+global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME STATIC_FRICTION KINETIC_FRICTION BOUNCE_TIME
 
 % Kinetic friction is less thann static friction
 KINETIC_FRICTION = 0.3;
@@ -12,6 +12,7 @@ GRAVITY = -9.81;
 BALLRADIUS = 0.007804912;
 MASS = 0.00491240537;
 INERTIA = (2/5)*MASS*BALLRADIUS^2; 
+BOUNCE_TIME = 0.14;
 
 BRACH_CURVATURE_VAR = 1; 
 
@@ -41,7 +42,7 @@ addpath './objects'
 
 [x_positions3, y_positions3, velocities3, accelerations3, time, position, omegas3, alphas3, omega] = slope(getOldVelocity(0), position, time, [position(1)+ 7.5*INCH_TO_METER, position(2) + 3*INCH_TO_METER], omega);
 
-[omega,impulse_acceleration] = bounce(energy_remain, getOldVelocity(0));
+[omega,impulse_acceleration, time] = bounce(energy_remain, getOldVelocity(0), time);
 
 [x_positions4, y_positions4, velocities4, accelerations4, time, omegas4, alphas4] = free(getOldVelocity(0), time, position,position(1)+ 1*INCH_TO_METER, position(2) + 0.2*INCH_TO_METER,-0.889);
 accelerations4(1) = impulse_acceleration;
