@@ -19,15 +19,18 @@ function [x_positions, y_positions, velocities, accelerations, time, omegas, alp
     end
     
     % WANT IMPULSE HERE. BUT IM ASSUMING ENERGY IS CONSERVED
+    energy_remain = 0.2;
     
-    velocity = norm(velocity) * [0, -1];
+    velocity = ((energy_remain*norm(velocity)^2)^0.5);
+    
+    velocity = velocity * [0, -1];
     
     while position(2) > bottom
         position = velocity * DELTA_TIME + position + (1/2)*GRAVITY*[0,1]*DELTA_TIME^2;
         x(n) = position(1);
         y(n) = position(2);
         all_velocities(n) = norm(velocity);
-        all_accelerations(n) =  -GRAVITY;
+        all_accelerations(n) =  GRAVITY;
         
         velocity = velocity + GRAVITY * DELTA_TIME * [0, 1];
         
