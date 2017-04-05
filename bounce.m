@@ -1,6 +1,6 @@
 function [omega,impulse_acceleration,time] = bounce(energy_remain, initial_velocity,time)
 global MASS
-impulse_time = 0.005;
+impulse_time = 0.001;
 
 if getTheta() < pi/2 && getTheta() > 0
     x_velocity = -(energy_remain*initial_velocity(1)^2)^0.5;

@@ -4,16 +4,18 @@ clc
 
 global GRAVITY BALLRADIUS INERTIA MASS DELTA_TIME PLOT_TIME STATIC_FRICTION KINETIC_FRICTION
 
-% Kinetic friction is less thann static friction
-KINETIC_FRICTION = 0.2;
+% Edit these constants
+KINETIC_FRICTION = 0.15;
 STATIC_FRICTION = 0.3;
 
 GRAVITY = -9.81;
 BALLRADIUS = 0.007804912;
 MASS = 0.00491240537;
-INERTIA = (2/5)*MASS*BALLRADIUS^2; 
+INERTIA = (2/5)*MASS*BALLRADIUS^2;
 
 BRACH_CURVATURE_VAR = 1; 
+
+
 
 DELTA_TIME = 0.001; % Smaller DELTA time increases precision of slope calculation
 PLOT_TIME = 0.003; % Plot every ___ Seconds
@@ -62,3 +64,8 @@ Time_taken = time;
 disp('Final Velocity (m/s)')
 disp('   V_x      V_y')
 disp(getOldVelocity(0))
+
+
+
+
+

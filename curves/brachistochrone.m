@@ -11,7 +11,7 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
 
     %% Generate curve
     DIVISIONS = 1000;
-    t = linspace(0, pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
+    t = linspace(0, 1*pi, DIVISIONS); %%define t for parametric equations (1000 divisions)
     
 
     %     %% Setting up velocity and acceleration temporary storage vectors
@@ -26,8 +26,11 @@ function [x_positions, y_positions, velocities, accelerations, final_time, final
     %         [~, finalVelocity] = slopeNoSlipping((y(idx+1) - y(idx)),1);
 
 
-    x = initial_position(1) + (curve_size)*0.19404*(t-sin(t)); %% x equation
+    x = initial_position(1) + (curve_size)*0.1940417*(t-sin(t)); %% x equation
     y = initial_position(2) + (curve_size)*0.3048*(-1+cos(t)); %% y equation
+    
+    % 10% x = 0.1619, y = 0.3124
+    %-10% x = 0.2420568741
 
 
     %% Find Slopes
