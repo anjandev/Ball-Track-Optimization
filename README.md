@@ -11,10 +11,15 @@ Matlab program to test time to reach end of ball track. Includes graphs of angul
 2. Edit the constants under the `% Edit these constants` comment at the top of main
 
 **Optional**
+
 You may change the path you want to test. Simply rearrange the functions `slope`, `brachistochrone`, `bounce`, and `free` functions in `main.m`.  
 
 ### Group Members:
+
 Anjandev Momi
+
 David Cao
+
 Brindan Ramalingam
+
 Ricardo Bravo
