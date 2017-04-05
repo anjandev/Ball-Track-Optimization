@@ -4,7 +4,7 @@ Matlab program to test time to reach end of ball track. Includes graphs of angul
 
 ![output](output.png) 
 
-[Video of What We're Trying to Simulate](https://www.youtube.com/watch?v=0w8jsNglxQI&feature=youtu.be) 
+[Video of what we're trying to simulate](https://www.youtube.com/watch?v=0w8jsNglxQI&feature=youtu.be) 
 
 ### Usage
 1. Open `main.m`
