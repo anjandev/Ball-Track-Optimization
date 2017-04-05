@@ -19,7 +19,7 @@ function [x_positions, y_positions, velocities, accelerations, time, omegas, alp
     end
     
     % WANT IMPULSE HERE. BUT IM ASSUMING ENERGY IS CONSERVED
-    energy_remain = 0.2;
+    energy_remain = 1;
     
     velocity = ((energy_remain*norm(velocity)^2)^0.5);
     
