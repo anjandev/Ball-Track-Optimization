@@ -23,3 +23,6 @@ David Cao
 Brindan Ramalingam
 
 Ricardo Bravo
+
+### License
+AGPL-3.0-or-later
